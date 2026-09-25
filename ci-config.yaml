@@ -1,0 +1,22 @@
+# DevX build fragment adapted from the supplied Python3 screenshots.
+# Replace all REPLACE_* values before running the Jenkins job.
+# Registry destination/credential are NOT the npm repository/credential.
+build:
+  enabled: true
+  container:
+    build_type: kaniko
+    registry_nexus: "REPLACE_WITH_TEAM_NEXUS_DOCKER_REGISTRY_PATH"
+    docker_args:
+      - type: creds_secrettext
+        name: "NEXUS_PERSONAL_TOKEN"
+        value: "REPLACE_WITH_NEXUS_TOKEN_SECRET_TEXT_CREDENTIAL_ID"
+      - type: creds_secrettext
+        name: "NEXUS_PERSONAL_USERNAME"
+        value: "REPLACE_WITH_NEXUS_USERNAME_SECRET_TEXT_CREDENTIAL_ID"
+    application_image_name: "chaosarmor-python-demo"
+    tag: "0.1.0-snapshot"
+    https_proxy: "http://googleapis-dev.gcp.cloud.uk.hsbc:3128"
+    no_proxy: "uk.hsbc"
+    jenkins_credential_id: "REPLACE_WITH_DOCKER_CONFIG_JSON_CREDENTIAL_ID"
+# registry_deploy / GCR omitted: Nexus-only image build and push.
+# No application deployment configuration is included.
